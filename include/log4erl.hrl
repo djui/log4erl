@@ -49,5 +49,7 @@
 
 -record(syslog_appender, {level=?DEFAULT_LEVEL, facility=user,host,port=415, socket, format=?DEFAULT_FORMAT}).
 
+-record(amqp_appender, {level=?DEFAULT_LEVEL, format=?DEFAULT_FORMAT, exchange, params}).
+
 %% log record
 -record(log, {level, msg, data, time, millis}).
