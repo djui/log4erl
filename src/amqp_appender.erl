@@ -17,7 +17,6 @@
 -include_lib("amqp_client/include/amqp_client.hrl").
 
 %%%_* Defines ==========================================================
--define(DEFAULT_FACILITY, ?MODULE).
 -define(DEFAULT_USER,     "guest").
 -define(DEFAULT_PASS,     "guest").
 -define(DEFAULT_VHOST,    "/").
@@ -27,7 +26,6 @@
 
 %%%_* Records ==========================================================
 -record(state, { level
-               , facility
                , format
                , exchange
                , params
@@ -37,7 +35,6 @@
 %%%_* Callbacks --------------------------------------------------------
 init({conf, Conf}) ->
   Level    = kf(level,      Conf, ?DEFAULT_LEVEL),
-  Facility = kf(facility,   Conf, ?DEFAULT_FACILITY),
   Format   = kf(format,     Conf, ?DEFAULT_FORMAT),
 
   Username = kf(amqp_user,  Conf, ?DEFAULT_USER),
@@ -59,7 +56,6 @@ init({conf, Conf}) ->
                                     },
   #'exchange.declare_ok'{} = amqp_channel:call(Channel, ExchangeDecl),
   {ok, #state{ level    = Level
-             , facility = Facility
              , format   = Format
              , exchange = Exchange
              , params   = AmqpParams
